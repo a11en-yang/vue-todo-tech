@@ -1,5 +1,6 @@
 const path = require('path')
 const webpack = require('webpack')
+const HTMLPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require("extract-text-webpack-plugin")
 
 const isDev = process.env.NODE_ENV === 'development'
@@ -48,7 +49,8 @@ const config = {
       'process.env': {
         NODE_ENV: isDev ? '"development"' : '"production"'
       }
-    })
+    }),
+    new HTMLPlugin()
   ]
 }
 
@@ -87,10 +89,9 @@ if (isDev) {
     vendor: ['vue']
   }
   config.output.filename = '[name].[chunkhash:8].js'
-  config.module.rules.push(
-    {
+  config.module.rules.push({
       test: /\.styl/,
-      use: ExtractPlugin.extract({
+      use: ExtractTextPlugin.extract({
         fallback: 'style-loader',
         use: [
           'css-loader',
@@ -103,10 +104,10 @@ if (isDev) {
           'stylus-loader'
         ]
       })
-    },
+    }
   )
   config.plugins.push(
-    new ExtractPlugin('styles.[contentHash:8].css'),
+    new ExtractTextPlugin('styles.[contentHash:8].css'),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor'
     }),
