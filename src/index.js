@@ -1,11 +1,12 @@
 import Vue from 'vue'
+import BootstrapVue from "bootstrap-vue"
 import App from './app.vue'
+import "bootstrap/dist/css/bootstrap.min.css"
+import "bootstrap-vue/dist/bootstrap-vue.css"
 
-import './assets/styles/global.styl'
-
-const root = document.createElement('div')
-document.body.appendChild(root)
+Vue.use(BootstrapVue)
 
 new Vue({
-  render: (h) => h(App)
-}).$mount(root)
+  el: '#app',
+  render: h => h(App)
+})
